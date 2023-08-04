@@ -1,21 +1,17 @@
 resource "aws_vpc" "this" {
-  cidr_block         = "172.16.0.0/24"
-  instance_tenancy   = "default"
-  enable_dns_support = true
+  cidr_block           = var.cidr_for_vpc
+  instance_tenancy     = var.tenancy
+  enable_dns_support   = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
   tags = {
-    Name = "three-tier-vpc-lwplabs"
+    Name = local.vpc_name
   }
 }
 
-
 resource "aws_subnet" "private_subnet" {
-  #count        = 2
-  for_each = { "172.16.0.0/26" : "us-east-1a", "172.16.0.64/26" : "us-east-1b" } # map data
-  #for_each = toset(["us-east-1a","us-east-1b"])
-  vpc_id     = aws_vpc.this.id
-  cidr_block = each.key
-  # cidr_block        = element(["172.16.0.0/26", "172.16.0.64/26"], count.index)
-  # availability_zone = element(["us-east-1a", "us-east-1b"], count.index)
+  for_each          = { for index, az_name in slice(data.aws_availability_zones.this.names, 0, var.num_of_subnets) : index => az_name } # {0: "us-east-1a", 1: "us-east-1b"}
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = cidrsubnet(var.cidr_for_vpc, local.newbits, each.key)
   availability_zone = each.value
   tags = {
     Name = "private_subnet_${each.value}"
@@ -24,12 +20,41 @@ resource "aws_subnet" "private_subnet" {
 
 
 resource "aws_subnet" "public_subnet" {
-  for_each                = { "172.16.0.128/26" : "us-east-1a", "172.16.0.192/26" : "us-east-1b" }
+  for_each                = { for index, az_name in slice(data.aws_availability_zones.this.names, 0, var.num_of_subnets) : index => az_name }
   vpc_id                  = aws_vpc.this.id
-  cidr_block              = each.key
+  cidr_block              = cidrsubnet(var.cidr_for_vpc, local.newbits, each.key + var.num_of_subnets)
   availability_zone       = each.value
   map_public_ip_on_launch = true
   tags = {
     Name = "public_subnet_${each.value}"
+  }
+}
+
+resource "aws_default_route_table" "this" {
+  default_route_table_id = aws_vpc.this.default_route_table_id
+
+  tags = {
+    Name = "private_rt_${local.vpc_name}"
+  }
+}
+
+resource "aws_route_table" "this" {
+  vpc_id = aws_vpc.this.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = {
+    Name = "public_rt_${local.vpc_name}"
+  }
+}
+
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+
+  tags = {
+    Name = "igw-${local.vpc_name}"
   }
 }
