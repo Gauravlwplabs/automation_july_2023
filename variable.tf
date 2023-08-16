@@ -28,3 +28,48 @@ variable "num_of_subnets" {
   type        = number
   description = "number of subnets required of public and private types"
 }
+
+variable "jump_server_image" {
+  type        = string
+  description = "AMI ID for jump server"
+  default     = "ami-08a52ddb321b32a8c"
+}
+
+variable "jump_server_instance_type" {
+  type        = string
+  description = "Instance type of jump server"
+  default     = "t2.micro"
+}
+
+variable "web_server_image" {
+  type        = string
+  description = "AMI ID for web server"
+  default     = "ami-08a52ddb321b32a8c"
+}
+
+variable "web_server_instance_type" {
+  type        = string
+  description = "Instance type of jump server"
+  default     = "t2.micro"
+}
+
+variable "inbound_rule_web" {
+  description = "Inbound rules for web server"
+  type = list(object({
+    port        = number
+    description = string
+    protocol    = string
+    }
+  ))
+  default = [{
+    port        = 22
+    description = "Allow ssh from jump server"
+    protocol    = "tcp"
+    },
+    {
+      port        = 80
+      description = "Allow access on port 80 from jump server"
+      protocol    = "tcp"
+    }
+  ]
+}

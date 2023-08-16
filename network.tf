@@ -1,3 +1,5 @@
+# resource for aws vpc creation 
+
 resource "aws_vpc" "this" {
   cidr_block           = var.cidr_for_vpc
   instance_tenancy     = var.tenancy
@@ -33,6 +35,11 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_default_route_table" "this" {
   default_route_table_id = aws_vpc.this.default_route_table_id
 
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.this.id
+  }
+
   tags = {
     Name = "private_rt_${local.vpc_name}"
   }
@@ -57,4 +64,31 @@ resource "aws_internet_gateway" "this" {
   tags = {
     Name = "igw-${local.vpc_name}"
   }
+}
+
+resource "aws_route_table_association" "public_rt_association" {
+  for_each       = { for index, each_subnet in aws_subnet.public_subnet : index => each_subnet.id }
+  subnet_id      = each.value
+  route_table_id = aws_route_table.this.id
+}
+
+resource "aws_route_table_association" "private_rt_association" {
+  for_each       = { for index, each_subnet in aws_subnet.private_subnet : index => each_subnet.id }
+  subnet_id      = each.value
+  route_table_id = aws_default_route_table.this.id
+}
+
+resource "aws_nat_gateway" "this" {
+  allocation_id = aws_eip.this.id
+  subnet_id     = element([for each_subnet in aws_subnet.public_subnet : each_subnet.id], 0)
+
+  tags = {
+    Name = "nat_gw_${local.vpc_name}"
+  }
+
+  depends_on = [aws_internet_gateway.this]
+}
+
+resource "aws_eip" "this" {
+  domain = "vpc"
 }
