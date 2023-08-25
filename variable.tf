@@ -41,12 +41,6 @@ variable "jump_server_instance_type" {
   default     = "t2.micro"
 }
 
-variable "web_server_image" {
-  type        = string
-  description = "AMI ID for web server"
-  default     = "ami-08a52ddb321b32a8c"
-}
-
 variable "web_server_instance_type" {
   type        = string
   description = "Instance type of jump server"
@@ -68,8 +62,41 @@ variable "inbound_rule_web" {
     },
     {
       port        = 80
-      description = "Allow access on port 80 from jump server"
+      description = "Allow access on port 80 from ALB"
       protocol    = "tcp"
     }
   ]
+}
+
+variable "inbound_rule_app" {
+  description = "Inbound rules for app server"
+  type = list(object({
+    port        = number
+    description = string
+    protocol    = string
+    }
+  ))
+  default = [{
+    port        = 22
+    description = "Allow ssh from jump server"
+    protocol    = "tcp"
+    },
+    {
+      port        = 8080
+      description = "Allow access on port 8080 from web server"
+      protocol    = "tcp"
+    }
+  ]
+}
+
+variable "db_user_name" {
+  description = "User Name for RDS"
+  type = string
+  default = "admin"
+}
+
+variable "db_password" {
+  type = string
+  description = "password for RDS"
+  sensitive = true
 }
