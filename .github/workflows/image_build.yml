@@ -4,7 +4,9 @@ on:
 jobs:
     build-image:
         runs-on: ubuntu-latest
-    
+    env:
+        PKR_VAR_region: us-east-1
+        
     steps:
         - name: Checkout
           uses: actions/checkout@v3
