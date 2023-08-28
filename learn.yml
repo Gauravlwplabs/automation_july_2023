@@ -1,0 +1,38 @@
+---
+name: Rahul
+age: 28
+company: "lwp labs pvt ltd"
+is_working: true
+
+# map/dictionary in yaml (key-value pairs)
+
+address:
+  h.no.: 101
+  street: ameerpeth
+  city:
+    road: byculla
+    apartment: lakshmi apt
+  pin: 123456
+
+company_address: {plot_no: 1, street: kormanagala, city: blr}
+
+# list/array in yaml
+
+skills:
+  - terraform
+  - kubernetes:
+      skill1: CKA
+      skill2: CKAD
+  - aws
+  - DevOps
+  - softskills1: teamplayer
+    softskills2: hardworking
+
+previous_employers: ["ABC", "XYZ"]
+
+
+feedback_from_tl: Rahul is great asset to the company
+
+feedback_from_manager: |
+  Rahul is great asset to the company
+  he has worked towards automation
