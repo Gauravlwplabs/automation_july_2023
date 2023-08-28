@@ -6,6 +6,22 @@ data "aws_availability_zones" "this" {
   }
 }
 
-# output "map_az" {
-#   value = {for index, az_name in slice(data.aws_availability_zones.this.names,0,var.num_of_subnets): index => az_name} 
-# }
+data "aws_ami" "this" {
+  most_recent = true
+  owners      = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["*-lwplabs-packer"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
