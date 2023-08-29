@@ -1,7 +1,7 @@
 variable app_name {
   description = "app name for the server"
   type        = string
-  default     = "web"
+  default     = "web-server"
 }
 
 variable source_ami {
