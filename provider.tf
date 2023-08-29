@@ -23,7 +23,6 @@ terraform {
 
 provider "aws" {
   region  = "us-east-1"
-  profile = "july"
   assume_role {
     role_arn     = "arn:aws:iam::869510502397:role/batch_july_sts_assume_role"
     session_name = "test"
