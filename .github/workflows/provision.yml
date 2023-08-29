@@ -26,7 +26,7 @@ jobs:
                 terraform validate
             
             - name: terraform plan
-              run: terraform plan -input=false
+              run: terraform plan -input=false -lock=false
             
             - name: terraform apply
               run: terraform apply --auto-approve
