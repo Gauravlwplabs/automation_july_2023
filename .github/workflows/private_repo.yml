@@ -9,4 +9,4 @@ jobs:
        - name: checkout repo
          uses: actions/checkout@v3
          with:
-           repository: Gauravlwplabs/terraform_multibranch
+           repository: Gauravlwplabs/demo-git
