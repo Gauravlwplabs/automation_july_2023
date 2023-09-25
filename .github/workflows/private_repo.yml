@@ -5,7 +5,7 @@ on:
 jobs:
   checks:
      name: checkout private repo
-     runs-on: amazon-linux
+     runs-on: ubuntu-latest
      steps:
        - name: checkout repo
          uses: actions/checkout@v3
