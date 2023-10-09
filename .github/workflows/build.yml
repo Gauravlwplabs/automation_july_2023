@@ -46,7 +46,7 @@ jobs:
             path: package
         
         - name: deploy package
-          run: aws s3 cp package/*.war s3://application-sourcecode-bucket
+          run: aws s3 cp package/*.war s3://artifact-bucket-lambda-integrated
         
         
 
