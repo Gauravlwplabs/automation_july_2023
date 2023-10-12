@@ -63,4 +63,4 @@
         dest: /opt/apache-tomcat-{{ tomcat_version }}/conf/tomcat-users.xml
     
     - name: tomcat start
-      aansible.builtin.shell: /opt/apache-tomcat-{{ tomcat_version }}/bin/startup.sh
+      ansible.builtin.shell: /opt/apache-tomcat-{{ tomcat_version }}/bin/startup.sh
