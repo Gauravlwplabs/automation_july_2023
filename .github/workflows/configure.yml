@@ -20,9 +20,12 @@ jobs:
               run: |
                 mkdir -p ~/.ssh
                 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                chmod 400 ~/.ssh/id_rsa
+                chmod 600 ~/.ssh/id_rsa
                 eval "$(ssh-agent)"
                 ssh-add ~/.ssh/id_rsa
 
             - name: configure tomcat
               run: ansible-playbook app_server_config.yml -i hosts
+
+            - name: clean up ssh
+              run: rm -rf ~/.ssh
