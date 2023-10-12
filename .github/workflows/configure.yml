@@ -10,10 +10,19 @@ jobs:
             ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
             DEPLOYER_PASSWORD: ${{ secrets.DEPLOYER_PASSWORD }}
             TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     
         steps:
             - name: checkout
               uses: actions/checkout@v3
             
+            - name: authanticate thorugh SSH
+              run: |
+                mkdir -p ~/.ssh
+                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+                chmod 400 ~/.ssh/id_rsa
+                eval "$(ssh-agent)"
+                ssh-add ~/.ssh/id_rsa
+
             - name: configure tomcat
               run: ansible-playbook app_server_config.yml -i hosts
