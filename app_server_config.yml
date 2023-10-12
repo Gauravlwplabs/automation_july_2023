@@ -26,6 +26,15 @@
           dest: /opt
           remote_src: true
     
+    - name: set permission on tomacat directory
+      ansible.builtin.file:
+        path: /opt/apache-tomcat-{{ tomcat_version }}
+        state: directory
+        recurse: yes
+        owner: ec2-user
+        group: ec2-user
+        mode: 0755
+    
     # - name: comment value tag sections in context.xml file
     #   ansible.builtin.replace:
     #       path: /opt/apache-tomcat-{{ tomcat_version }}/webapps/{{ item }}/META-INF/context.xml
@@ -63,4 +72,4 @@
         dest: /opt/apache-tomcat-{{ tomcat_version }}/conf/tomcat-users.xml
     
     - name: tomcat start
-      ansible.builtin.shell: /opt/apache-tomcat-{{ tomcat_version }}/bin/startup.sh
+      ansible.builtin.shell: nohup /opt/apache-tomcat-{{ tomcat_version }}/bin/startup.sh &
