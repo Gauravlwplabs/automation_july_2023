@@ -3,4 +3,4 @@ regions:
   - us-east-1
 filters:
   # All instances with their `Environment` tag set to `dev`
-  tag:Environment: dev
+  tag:Environement: dev
