@@ -5,7 +5,7 @@
   become: true
   vars:
      java_version: 1.8*
-     tomcat_version: 9.0.80
+     tomcat_version: 9.0.82
      admin_password: "{{ lookup('ansible.builtin.env', 'ADMIN_PASSWORD') }}"
      deployer_password: "{{ lookup('ansible.builtin.env', 'DEPLOYER_PASSWORD') }}"
      tomcat_password: "{{ lookup('ansible.builtin.env', 'TOMCAT_PASSWORD') }}"
