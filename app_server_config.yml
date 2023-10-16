@@ -48,27 +48,27 @@
 
     - name: comment value tag section in context.xml file of docs directory
       ansible.builtin.template:
-        src: /home/ec2-user/ansible/templates/docs_context.xml
+        src: templates/docs_context.xml
         dest: /opt/apache-tomcat-{{ tomcat_version }}/webapps/docs/META-INF/context.xml
 
     - name: comment value tag section in context.xml file of docs directory
       ansible.builtin.template:
-        src: /home/ec2-user/ansible/templates/examples_context.xml
+        src: templates/examples_context.xml
         dest: /opt/apache-tomcat-{{ tomcat_version }}/webapps/examples/META-INF/context.xml
 
     - name: comment value tag section in context.xml file of docs directory
       ansible.builtin.template:
-        src: /home/ec2-user/ansible/templates/manager_context.xml
+        src: templates/manager_context.xml
         dest: /opt/apache-tomcat-{{ tomcat_version }}/webapps/manager/META-INF/context.xml
 
     - name: comment value tag section in context.xml file of docs directory
       ansible.builtin.template:
-        src: /home/ec2-user/ansible/templates/hostmanager_context.xml
+        src: templates/hostmanager_context.xml
         dest: /opt/apache-tomcat-{{ tomcat_version }}/webapps/host-manager/META-INF/context.xml
       
     - name: update tomcat users xml 
       ansible.builtin.template:
-        src: /home/ec2-user/ansible/templates/tomcat-users.xml.j2
+        src: templates/tomcat-users.xml.j2
         dest: /opt/apache-tomcat-{{ tomcat_version }}/conf/tomcat-users.xml
     
     - name: tomcat start
