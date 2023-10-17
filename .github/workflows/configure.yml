@@ -26,6 +26,3 @@ jobs:
 
             - name: configure tomcat
               run: ansible-playbook app_server_config.yml -i hosts
-
-            - name: clean up ssh
-              run: rm -rf ~/.ssh
