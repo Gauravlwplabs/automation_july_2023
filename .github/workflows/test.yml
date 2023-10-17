@@ -1,0 +1,33 @@
+name: 
+on:
+  workflow_dispatch:
+  
+#   pull_request:
+#     branches: [main]
+#   push:
+#     branches: [main]
+
+jobs:
+  test-terraform-code:
+     name: test terraform config
+     runs-on: ubuntu-latest
+     env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_key }}
+        TF_VAR_db_password: ${{ secrets.db_password }}
+        TF_VAR_db_user_name: ${{ secrets.db_user_name }}
+     steps:
+       - name: checkout repo
+         uses: actions/checkout@v3
+
+       - name: setup go
+         uses: actions/setup-go@v4
+         with:
+            go-version: '1.20'
+
+       - name: test terraform config
+         working-directory: ./tests
+         run: |
+           go mod init github.com/${{ github.repository }}
+           go mod tidy
+           go test -v -timeout 60m
