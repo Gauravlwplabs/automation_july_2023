@@ -24,5 +24,10 @@ jobs:
                 eval "$(ssh-agent)"
                 ssh-add ~/.ssh/id_rsa
 
+            - name: configure dynamic inventory
+              run: |
+                ansible-galaxy collection install amazon.aws
+                ansible-inventory -i aws_ec2.yml --list
+
             - name: configure tomcat
-              run: ansible-playbook app_server_config.yml -i hosts
+              run: ansible-playbook app_server_config.yml -i aws_ec2.yml -vvv
