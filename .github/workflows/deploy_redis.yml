@@ -53,6 +53,7 @@ jobs:
             --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
             --output text))
             aws eks --region us-east-2 update-kubeconfig --name hr-digital-prod --role-arn arn:aws:iam::869510502397:role/batch_july_sts_assume_role
+            kubectl create ns redis-app
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
