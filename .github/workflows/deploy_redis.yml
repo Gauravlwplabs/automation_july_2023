@@ -52,8 +52,7 @@ jobs:
             --role-session-name updateconfig \
             --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
             --output text))
-            aws eks --region us-east-2 update-kubeconfig --name hr-digital-prod
-            kubectl create ns redis-app
+            aws eks --region us-east-2 update-kubeconfig --name hr-digital-prod --role-arn arn:aws:iam::869510502397:role/batch_july_sts_assume_role
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
@@ -62,7 +61,6 @@ jobs:
       - name: Switch to staging cluster
         uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
-          namespace: redis-app
           k8-config-file-paths: |
             ./go-redis-app/manifests/redis-master.yml
             ./go-redis-app/manifests/redis-configmap.yml
