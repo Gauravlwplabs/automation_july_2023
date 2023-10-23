@@ -61,6 +61,7 @@ jobs:
       - name: Switch to staging cluster
         uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
+          namespace: redis-app
           k8-config-file-paths: |
             ./go-redis-app/manifests/go-redis-ns.yml
             ./go-redis-app/manifests/redis-master.yml
