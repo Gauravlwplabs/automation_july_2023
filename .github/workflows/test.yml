@@ -1,4 +1,4 @@
-name: 
+name: test terraform
 on:
   workflow_dispatch:
   
@@ -30,4 +30,8 @@ jobs:
          run: |
            go mod init github.com/${{ github.repository }}
            go mod tidy
+<<<<<<< HEAD
            go test -v -timeout 60m
+=======
+           go test -v -timeout 60m
+>>>>>>> 57ee46871ce61bd463f071a21593bf6bfe34e0e1
