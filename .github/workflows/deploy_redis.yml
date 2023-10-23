@@ -62,6 +62,7 @@ jobs:
         uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
           k8-config-file-paths: |
+            ./go-redis-app/manifests/go-redis-ns.yml
             ./go-redis-app/manifests/redis-master.yml
             ./go-redis-app/manifests/redis-configmap.yml
             ./go-redis-app/manifests/go-redis-svc.yml
