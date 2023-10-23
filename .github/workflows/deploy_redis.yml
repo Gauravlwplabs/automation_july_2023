@@ -62,10 +62,10 @@ jobs:
         uses: swdotcom/update-and-apply-kubernetes-configs@v1
         with:
           k8-config-file-paths: |
-            manifests/redis-master.yml
-            manifests/redis-configmap.yml
-            manifests/go-redis-svc.yml
-            manifests/go-redis-app.yml
+            ./go-redis-app/manifests/redis-master.yml
+            ./go-redis-app/manifests/redis-configmap.yml
+            ./go-redis-app/manifests/go-redis-svc.yml
+            ./go-redis-app/manifests/go-redis-app.yml
           replacement-method: defined
         env:
           IMAGE_TAG: ${{ github.run_id }}
