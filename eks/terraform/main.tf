@@ -3,10 +3,10 @@ data "aws_caller_identity" "current" {}
 
 
 provider "aws" {
-  region = var.region
+  region  = var.region
   profile = "july"
   assume_role {
-    role_arn = "arn:aws:iam::869510502397:role/batch_july_sts_assume_role"
+    role_arn     = "arn:aws:iam::869510502397:role/batch_july_sts_assume_role"
     session_name = "eks-session"
   }
 }

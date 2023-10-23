@@ -15,6 +15,7 @@ terraform {
     bucket         = "statestorebucket-lwplabs"
     key            = "terraformstatestore-batch-jul-2023"
     region         = "us-east-1"
+    profile = "july"
     role_arn       = "arn:aws:iam::869510502397:role/batch_july_sts_assume_role"
     dynamodb_table = "statelocktable"
   }
